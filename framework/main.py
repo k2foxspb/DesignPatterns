@@ -51,6 +51,7 @@ class Framework:
         for front in self.fronts_lst:
             front(request)
         # запуск контроллера с передачей объекта request
+
         code, body = view(request)
         start_response(code, [('Content-Type', 'text/html')])
         return [body.encode('utf-8')]
@@ -65,6 +66,10 @@ class Framework:
         return new_data
 
 
+# Новый вид WSGI-application.
+# Первый — логирующий (такой же, как основной,
+# только для каждого запроса выводит информацию
+# (тип запроса и параметры) в консоль.
 class DebugApplication(Framework):
 
     def __init__(self, routes_obj, fronts_obj):
